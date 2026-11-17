@@ -385,6 +385,7 @@
     $("wxOrderPreview").textContent = orderText;
     $("wxIdText").textContent = wx.wechat_id || "请配置微信号";
     $("wxQrImg").src = wx.qr_image || "./assets/wechat-qr.svg";
+    $("wxQrImg").parentElement.style.display = (!wx.qr_image || /wechat-qr\.svg/.test(wx.qr_image)) ? "none" : "";
     $("wxWorkTime").textContent = wx.work_time || "每日 08:30 - 23:30 极速响应发货";
     $("wxCopiedBanner").textContent =
       "✅ 已自动复制您选中的方志编号与书名！打开微信直接「粘贴」发送给掌柜即可秒发网盘链接。";

@@ -8,7 +8,7 @@
   "site_domain": "https://example.com",
   "wechat": {
     "mode": "both",
-    "wechat_id": "请在此填写你的微信号",
+    "wechat_id": "keyokeyo456",
     "wechat_name": "藏志阁掌柜",
     "qr_image": "./assets/wechat-qr.svg",
     "kf_url": "",
