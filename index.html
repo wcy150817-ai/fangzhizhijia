@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>中华古籍方志数字藏书馆 — 全国5000+部历代省志·府志·州志·县志·乡土志PDF原档目录</title>
+  <meta name="description" content="实藏全国 32 省市区 5,000+ 部宋元明清及民国珍稀古籍地方志、通志、府志、州志、县志、乡土志、山水专志高清扫描电子版（PDF），支持按省份、县名、朝代秒查，全场普惠 ¥9.9/部百度网盘秒发。" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <nav class="sub-topnav">
+    <div class="sub-topnav-inner">
+      <a href="./index.html" class="sub-brand">
+        <span class="brand-seal">志</span>
+        <span id="navBrandText">中华古籍方志数字馆</span>
+      </a>
+      <div class="sub-links">
+        <a href="./index.html" class="active">方志检索</a>
+        <a href="./provinces/index.html">分省总目</a>
+        <a href="./eras/index.html">朝代与体裁</a>
+        <a href="./articles/index.html">查志指南</a>
+        <a href="#bundleSection">同县/整省打包</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <h1 id="siteTitle" class="hero-title">中华古籍方志数字藏书馆</h1>
+      <p id="siteSubtitle" class="hero-sub">
+        实藏全国 5,076 部宋元明清及民国省志 · 府志 · 州志 · 县志 · 乡土志高清 PDF 电子版 · 统一 ¥9.9/部 · 百度网盘秒发
+      </p>
+
+      <div class="fz-search-console">
+        <div class="fz-kw-wrap">
+          <input id="kwInput" type="search" autocomplete="off" placeholder="输入县名 / 府州名 / 古地名 / 书名 / 编号（如：平谷、松江府、任丘、乾隆）" />
+        </div>
+        <div class="fz-sep"></div>
+        <div class="fz-sel-wrap">
+          <select id="selProv" title="选择省份">
+            <option value="">全国省份</option>
+          </select>
+        </div>
+        <div class="fz-sep"></div>
+        <div class="fz-sel-wrap">
+          <select id="selCity" title="选择地级市/州/区">
+            <option value="">不限地市</option>
+          </select>
+        </div>
+        <div class="fz-sep"></div>
+        <div class="fz-sel-wrap">
+          <select id="selDynasty" title="选择纂修朝代">
+            <option value="">全部朝代</option>
+          </select>
+        </div>
+        <div class="fz-sep"></div>
+        <div class="fz-sel-wrap">
+          <select id="selType" title="选择方志体裁">
+            <option value="">全部体裁</option>
+          </select>
+        </div>
+        <button type="button" id="resetBtn" class="fz-reset-btn" style="display:none;">重置</button>
+        <button type="button" id="searchBtn" class="fz-submit-btn">查方志</button>
+      </div>
+
+      <div class="hot-queries">
+        <span>热门检索：</span>
+        <a data-hot-q="平谷">平谷县志</a>
+        <a data-hot-q="顺天府">顺天府志</a>
+        <a data-hot-q="松江府">松江府志</a>
+        <a data-hot-q="淳安">淳安县志</a>
+        <a data-hot-q="遵义府">遵义府志</a>
+        <a data-hot-q="乡土志">清末乡土志</a>
+        <a data-hot-era="明代方志">明代善本方志</a>
+        <a data-hot-era="宋元珍本">宋元古志</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-wrap">
+    <!-- 全国各省直选墙 -->
+    <section class="box-card">
+      <div class="sec-header" style="margin-bottom:9px;">
+        <div class="sec-title">🗺️ 全国分省古籍方志直选</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button id="clearAllFilterBtn" class="ghost-btn" style="display:none;">✕ 清空筛选</button>
+          <a href="./provinces/index.html" class="ghost-btn" style="text-decoration:none;">分省专页总表 →</a>
+        </div>
+      </div>
+      <div id="provPills" class="pill-list"></div>
+
+      <!-- 选中省份后动态展示本省热门府州县胶囊 -->
+      <div id="regionFacetWrap" class="sub-facet-row" style="display:none;">
+        <span class="sub-facet-lbl">府州县直选：</span>
+        <div id="regionPills" class="pill-list"></div>
+      </div>
+    </section>
+
+    <!-- 选中省份后展示本省方志沿革卡片 -->
+    <section id="provLoreBox" class="lore-hero-card" style="display:none;"></section>
+
+    <!-- 结果统计与排序工具条 -->
+    <div class="toolbar-row">
+      <div id="resultStatus" style="font-size:13.5px;color:var(--ink-mid);">正在加载方志馆藏总目…</div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+        <select id="sortSelect" class="filter-select" title="排序方式">
+          <option value="default">默认推荐排序</option>
+          <option value="files_desc">卷册数从多到少</option>
+          <option value="size_desc">文件体积从大到小</option>
+          <option value="title_asc">按书名音序</option>
+        </select>
+        <button id="shareLinkBtn" class="ghost-btn">🔗 复制当前书目链接</button>
+      </div>
+    </div>
+
+    <!-- 方志卡片双列网格 -->
+    <section id="bookGrid" class="book-grid"></section>
+
+    <!-- 分页 -->
+    <div class="pager-bar">
+      <button id="prevBtn" class="ghost-btn">← 上一页</button>
+      <span id="pageLabel" style="font-size:13.5px;color:var(--ink-mid);">1 / 1</span>
+      <button id="nextBtn" class="ghost-btn">下一页 →</button>
+    </div>
+
+    <!-- 同县历代旧志与整省打包说明 -->
+    <section id="bundleSection" class="box-card bundle-note-card">
+      <div class="bundle-note-head">
+        <div>
+          <h2 style="font-size:16px;color:var(--ink-dark);margin-bottom:3px;">📦 古籍方志定价 · 同县历代合集与整省打包说明</h2>
+          <p style="font-size:12.5px;color:var(--ink-light);">100% 自有百度网盘现货 · 原刻高清扫描无遮挡 · 永久保存</p>
+        </div>
+        <button type="button" id="bundleAskBtn" class="btn-wx" style="padding:8px 16px;font-size:13.5px;">
+          💬 微信咨询同县/整省打包优惠
+        </button>
+      </div>
+      <div class="bundle-note-grid">
+        <div class="bundle-note-item">
+          <strong>1. 单部普惠：¥9.9 / 部（全卷包干）</strong>
+          <p>无论一部方志含单册 PDF 还是数十册鸿篇府志、通志，整部全卷册统一仅 ¥9.9。点击卡片「微信获取」复制编号发给掌柜，百度网盘秒发链接。</p>
+        </div>
+        <div class="bundle-note-item">
+          <strong>2. 多部组合：任选 3 部 ¥25 · 同县全套特惠</strong>
+          <p>考证村史或修谱常需将本县【清代志 + 民国续志 + 上级府志】对照查阅。点「+ 选书」满 3 部自动立减为 ¥25；亦可微信咨询同县全套或整省方志合集打包。</p>
+        </div>
+        <div class="bundle-note-item">
+          <strong>3. 购前须知（原件扫描古籍电子版）</strong>
+          <p>馆藏均为宋元明清及民国原刻本/抄本/铅印本高清扫描电子书（竖排繁体 PDF 为主），按书目编号自助调阅发货，<strong>不含人工代查内页人名或村名服务</strong>。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 古籍方志内页四大文献价值展示 -->
+    <section class="box-card">
+      <div class="sec-header" style="margin-bottom:4px;">
+        <div class="sec-title">📜 古籍方志原档包含什么？ · 寻根修谱与地方文史四大核心卷目</div>
+        <span style="font-size:12px;color:var(--ink-light);">原刻版画与竖排正文高清扫描 · 手机电脑无损放大</span>
+      </div>
+      <div class="folio-grid">
+        <div class="folio-card">
+          <div class="folio-leaf">
+            <div class="folio-col title-col">卷首全境山川城池輿圖</div>
+            <div class="folio-col">東至某界三十里西至某山五十里</div>
+            <div class="folio-col">城周四里門四東曰迎旭南曰文明</div>
+            <div class="folio-col">附學宮書院圖及本邑八景木刻圖</div>
+          </div>
+          <div class="folio-caption">
+            <h4>① 疆域全图与城池八景版画</h4>
+            <p>直观呈现百年前县城街巷、城门衙署、书院祠庙方位及传世八景木刻画卷。</p>
+          </div>
+        </div>
+
+        <div class="folio-card">
+          <div class="folio-leaf">
+            <div class="folio-col title-col">疆域志·鄉鎮都圖里甲考</div>
+            <div class="folio-col">懷德鄉統三都十二圖共四十八村莊</div>
+            <div class="folio-col">某鎮集期逢三八日某渡通官道要衝</div>
+            <div class="folio-col">氏族聚落遷徙始末悉載各鄉圖下</div>
+          </div>
+          <div class="folio-caption">
+            <h4>② 建置沿革与都图古村名录</h4>
+            <p>逐乡逐都列出百年前全部村庄、集市、津梁古迹，是破解家谱老地名的唯一权威底本。</p>
+          </div>
+        </div>
+
+        <div class="folio-card">
+          <div class="folio-leaf">
+            <div class="folio-col title-col">選舉志·歷代進士舉人貢表</div>
+            <div class="folio-col">乾隆丙辰恩科舉人某字某號某鄉人</div>
+            <div class="folio-col">歲貢生某任某縣教諭以子貴封文林郎</div>
+            <div class="folio-col">附武科仕宦掾史及誥封恩蔭名錄</div>
+          </div>
+          <div class="folio-caption">
+            <h4>③ 科举选举表与仕宦封赠录</h4>
+            <p>正史不载的本县进士、举人、五贡生员、武举及父祖诰封官衔，在县志中悉数留名。</p>
+          </div>
+        </div>
+
+        <div class="folio-card">
+          <div class="folio-leaf">
+            <div class="folio-col title-col">人物志·鄉賢孝義與藝文碑記</div>
+            <div class="folio-col">義行傳載某公捐修石橋賑濟歲飢事</div>
+            <div class="folio-col">風俗志詳記歲時伏臘婚喪方言物產</div>
+            <div class="folio-col">藝文金石收錄歷代名宦邑人詩文碑銘</div>
+          </div>
+          <div class="folio-caption">
+            <h4>④ 乡贤孝义列传与民俗碑刻</h4>
+            <p>详载地方先贤义士生平、节孝旌表、岁时风俗方言及古寺祠堂碑铭原文。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 查志实战与文史专栏 -->
+    <section class="box-card">
+      <div class="sec-header" style="margin-bottom:4px;">
+        <div class="sec-title">🧭 方志文史与查志指南 · 寻根考证必读专栏</div>
+        <a href="./articles/index.html" style="font-size:13px;color:var(--indigo);text-decoration:none;font-weight:600;">全部指南文章 →</a>
+      </div>
+      <div id="homeArticlesGrid" class="topic-grid"></div>
+    </section>
+
+    <!-- 常见问题 FAQ + 分省 SEO 内链 -->
+    <section class="box-card">
+      <div class="sec-title">💡 古籍方志调阅常见问题</div>
+      <div class="faq-grid">
+        <div class="faq-item">
+          <h4>Q1：这里的方志都是现货吗？付款后怎么发给我？</h4>
+          <p>本网站展示的 5,000+ 部方志<strong>100% 为馆主自有百度网盘现货</strong>！添加微信发送书目编号（如 <code>FZ-05007</code>）后，直接秒发百度网盘链接，可一键转存或下载永久保存。</p>
+        </div>
+        <div class="faq-item">
+          <h4>Q2：¥9.9 是一册的价格还是整部县志/府志的价格？</h4>
+          <p><strong>¥9.9 为整部书全卷册总价</strong>（例如一部《松江府志》或《遵义府志》包含多册上千页高清 PDF，也是 ¥9.9 全包），绝无按册拆分加价。</p>
+        </div>
+        <div class="faq-item">
+          <h4>Q3：为什么搜我老家现在的县名没搜到？</h4>
+          <p>明清许多州县在民国初年改过名（如湖北阳新旧称“兴国州”，河北辛集旧称“束鹿县”，陕西周至旧作“盩厔”）。建议直接点选上方的<strong>所属省份</strong>浏览该省完整书单，或查看上级《府志》。</p>
+        </div>
+        <div class="faq-item">
+          <h4>Q4：修村史、修家谱或文史研究，可以按某县全套或整省打包吗？</h4>
+          <p>非常欢迎！网页上自选满 3 部自动享 ¥25 组合价；如需打包<strong>某县历代全部旧志、某府全套方志或整省地方志全集</strong>，点击右下角联系掌柜微信享批量特惠价。</p>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;padding-top:14px;border-top:1px dashed var(--line-warm);">
+        <div style="font-size:13px;font-weight:700;margin-bottom:8px;color:var(--ink-mid);">🗺️ 全国 32 省市区方志馆藏专页直达索引：</div>
+        <div id="footerProvLinks" class="pill-list"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p id="footerBundleTip">单部 ¥9.9 · 任选 3 部仅 ¥25 · 自有百度网盘高清原档秒发</p>
+    <p style="margin-top:6px;">
+      <a href="./provinces/index.html" style="color:var(--ink-mid);">全国分省方志总目</a> ·
+      <a href="./eras/index.html" style="color:var(--ink-mid);">宋元明清民国分类总目</a> ·
+      <a href="./articles/index.html" style="color:var(--ink-mid);">古籍方志查阅指南</a> ·
+      <a href="./sitemap.xml" style="color:var(--ink-light);">网站地图(Sitemap)</a>
+    </p>
+  </footer>
+
+  <button id="fabWechatBtn" class="fab-wx">💬 微信购书 / 打包</button>
+
+  <div id="bagBar" class="bag-bar">
+    <div style="font-size:13.5px;white-space:nowrap;">
+      已选 <strong id="bagCount" style="color:#fbbf24;">0</strong> 部 ·
+      组合特惠 <strong id="bagPrice" style="color:#f87171;">¥0</strong>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <button id="clearBagBtn" class="ghost-btn" style="padding:5px 10px;background:rgba(255,255,255,0.1);color:#ddd;border-color:rgba(255,255,255,0.2);">清空</button>
+      <button id="checkoutBagBtn" class="btn-wx" style="padding:7px 14px;border-radius:999px;">💬 去微信发清单拿书</button>
+    </div>
+  </div>
+
+  <!-- 微信对接转化弹窗 -->
+  <div id="wxBackdrop" class="wx-backdrop">
+    <div class="wx-modal">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+        <h3 style="font-size:17px;">💬 联系微信极速调阅方志</h3>
+        <button id="closeWxModalBtn" class="ghost-btn" style="padding:3px 9px;">✕</button>
+      </div>
+
+      <div id="wxCopiedBanner" class="wx-copied-tip">
+        ✅ 已自动复制您选中的方志编号与书名！打开微信直接「粘贴」发送给掌柜即可秒发网盘链接。
+      </div>
+
+      <div id="wxOrderPreview" class="wx-order-box"></div>
+
+      <a id="wxKfDirectBtn" href="#" target="_blank" rel="noopener" class="wx-big-btn green" style="display:none;">
+        🚀 一键跳转微信在线客服窗口（直接粘贴发送）
+      </a>
+
+      <div id="wxPersonalBlock">
+        <div class="wx-qr-wrap">
+          <img id="wxQrImg" src="./assets/wechat-qr.svg" alt="微信二维码" />
+          <div style="font-size:12px;color:var(--ink-light);">手机微信内长按识别二维码 · 电脑端请用微信扫一扫</div>
+        </div>
+
+        <div style="text-align:center;font-size:13.5px;margin-bottom:10px;">
+          掌柜微信号：<strong id="wxIdText" style="color:var(--cinnabar);font-size:15px;user-select:all;">--</strong>
+          <button id="copyWxIdOnlyBtn" class="ghost-btn" style="padding:2px 8px;margin-left:6px;font-size:12px;">复制微信号</button>
+        </div>
+
+        <button id="openWeixinAppBtn" class="wx-big-btn green">
+          📲 复制微信号并唤醒打开微信 App
+        </button>
+      </div>
+
+      <button id="copyInquiryAgainBtn" class="wx-big-btn dark">
+        📋 重新复制所选方志书名与编号
+      </button>
+
+      <div id="wxWorkTime" style="text-align:center;font-size:12px;color:var(--ink-light);margin-top:4px;"></div>
+    </div>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>

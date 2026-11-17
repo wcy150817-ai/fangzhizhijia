@@ -1,0 +1,4 @@
+/data/*
+  Cache-Control: public, max-age=3600
+/site-config.json
+  Cache-Control: no-cache

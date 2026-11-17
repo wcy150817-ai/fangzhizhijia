@@ -1,0 +1,18 @@
+{
+  "site_title": "中华古籍方志数字藏书馆",
+  "site_subtitle": "实藏全国 5,076 部宋元明清及民国省志 · 府志 · 州志 · 县志 · 乡土志高清 PDF 电子版 · 统一 ¥9.9/部 · 百度网盘秒发",
+  "announcement": "全馆古籍地方志电子版 ¥9.9 / 部 · 任选 3 部 ¥25 · 复制编号加微信秒发百度网盘链接",
+  "default_price": 9.9,
+  "show_price": true,
+  "bundle_tip": "单部 ¥9.9 · 任选 3 部仅 ¥25 · 支持同县历代旧志/整省打包 · 百度网盘秒发",
+  "site_domain": "https://example.com",
+  "wechat": {
+    "mode": "both",
+    "wechat_id": "请在此填写你的微信号",
+    "wechat_name": "藏志阁掌柜",
+    "qr_image": "./assets/wechat-qr.svg",
+    "kf_url": "",
+    "kf_button_text": "🚀 一键跳转微信在线客服",
+    "work_time": "每日 08:30 - 23:30 在线发货"
+  }
+}
