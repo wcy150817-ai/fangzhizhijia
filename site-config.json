@@ -5,7 +5,7 @@
   "default_price": 9.9,
   "show_price": true,
   "bundle_tip": "单部 ¥9.9 · 任选 3 部仅 ¥25 · 支持同县历代旧志/整省打包 · 百度网盘秒发",
-  "site_domain": "https://example.com",
+  "site_domain": "https://fangzhi.zupufangzhi.com",
   "wechat": {
     "mode": "both",
     "wechat_id": "keyokeyo456",
